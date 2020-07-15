@@ -1,4 +1,4 @@
-name: Build Web App
+name: BuildWeb
 on: [push]
 jobs:
   build:
