@@ -1,12 +1,16 @@
 name: Build Web App
-on: [push]
+on: 
+    push: 
+        branches: [ master ]
+    pull_request: 
+        branches: [ master ]
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@master
+      uses: actions/checkout@v2
       
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.2
