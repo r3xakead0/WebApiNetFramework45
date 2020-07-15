@@ -1,4 +1,4 @@
-name: BuildWeb
+name: Build Web App
 on: [push]
 jobs:
   build:
@@ -6,7 +6,7 @@ jobs:
 
     steps:
     - name: Checkout Code
-    - uses: actions/checkout@master
+      uses: actions/checkout@master
       
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.2
