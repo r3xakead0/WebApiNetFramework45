@@ -1,17 +1,29 @@
-name: ASP.NET CI
+name: Build Web App
 on: [push]
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
+    - name: Checkout Code
     - uses: actions/checkout@master
       
-    - name: Setup Nuget.exe
-      uses: warrenbuckley/Setup-Nuget@v1
-    - name: Restore packages
-      run: nuget restore WebApi_NetFramework45.sln
-    - name: Setup MSBuild.exe
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.2
+    
+    - name: Setup MSBuild
       uses: warrenbuckley/Setup-MSBuild@v1
-    - name: Build with MSBuild
-      run: msbuild WebApi_NetFramework45.sln -p:Configuration=Release
+      
+    - name: Restore NuGet Packages
+      run: nuget restore WebApi_NetFramework45.sln
+
+    - name: Build and Publish Web App
+      run: msbuild WebApi_NetFramework45.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
+ 
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: published_webapp
+        path: bin\Release\Publish
+      
+    
