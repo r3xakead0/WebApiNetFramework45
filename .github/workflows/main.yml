@@ -22,5 +22,16 @@ jobs:
       run: nuget restore WebApi_NetFramework45.sln
 
     - name: Build Web App
-      run: msbuild WebApi_NetFramework45.sln /p:Configuration=Release 
+      run: msbuild WebApi_NetFramework45.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: WebApi_NetFramework45
+        path: "./_build"
+    
+    - name: Download artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: WebApi_NetFramework45
     
